@@ -40,4 +40,12 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente [ID=" + id +
+                ", Nome=" + nome +
+                ", Email=" + email +
+                ", Telefone=" + telefone + "]";
+    }
 }
