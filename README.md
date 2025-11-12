@@ -1,72 +1,169 @@
 # 🚀 Sistema de Gerenciamento de Vendas (API)
 
-Este é um projeto acadêmico de um sistema de backend para gerenciamento de vendas, desenvolvido em Java com o framework Spring Boot. A aplicação expõe uma API RESTful para gerenciar clientes, produtos e pedidos, utilizando um banco de dados PostgreSQL para persistência.
+Aplicação RESTful em Spring Boot para gerenciar clientes, produtos e pedidos com persistência em PostgreSQL. Inclui validação de dados, regras de estoque e endpoints prontos para testes manuais ou automatizados.
 
 ---
 
 ## 1. Pré-requisitos
 
-Antes de começar, certifique-se de que você tem os seguintes softwares instalados em sua máquina:
+Instale os seguintes softwares:
 
-* [Java JDK 17 (ou superior)](https://www.oracle.com/java/technologies/downloads/#java17)
-* [Apache Maven](https://maven.apache.org/download.cgi)
-* [PostgreSQL (Banco de Dados)](https://www.postgresql.org/download/)
-* Um cliente de API, como o [Postman](https://www.postman.com/downloads/), para testar os endpoints.
-
----
-
-## 2. Configuração do Banco de Dados
-
-A aplicação espera se conectar a um banco de dados PostgreSQL.
-
-1.  Inicie o seu serviço do PostgreSQL.
-2.  Crie um novo banco de dados para o projeto. O nome padrão esperado pela configuração é `projeto_vendas`.
-    ```sql
-    CREATE DATABASE projeto_vendas;
-    ```
-3.  As tabelas (`clientes`, `produtos`, `pedidos`, `itens_pedido`) serão criadas automaticamente pelo Spring Data JPA na primeira vez que a aplicação for executada.
+- [Java JDK 17](https://www.oracle.com/java/technologies/downloads/#java17)
+- [Apache Maven](https://maven.apache.org/download.cgi)
+- [PostgreSQL](https://www.postgresql.org/download/)
+- Cliente HTTP (ex.: [Postman](https://www.postman.com/downloads/))
 
 ---
 
-## 3. Configuração da Aplicação (Obrigatório)
+## 2. Banco de Dados
 
-Por razões de segurança, o arquivo de configuração com as credenciais do banco não está incluído no repositório. Você deve criá-lo manualmente.
-
-1.  Navegue até a pasta de recursos do projeto: `src/main/resources/`
-2.  Crie um novo arquivo chamado exatamente: **`application.properties`**
-3.  Copie e cole o conteúdo abaixo neste arquivo:
-
-    ```properties
-    # --- Configuração do Banco de Dados PostgreSQL ---
-    # Altere "seu_usuario_postgres" e "sua_senha_postgres"
-    # com as suas credenciais reais do PostgreSQL.
-    
-    spring.datasource.url=jdbc:postgresql://localhost:5432/projeto_vendas
-    spring.datasource.username=seu_usuario_postgres
-    spring.datasource.password=sua_senha_postgres
-    
-    # --- Configurações do JPA (Hibernate) ---
-    spring.jpa.show-sql=true
-    spring.jpa.hibernate.ddl-auto=update
-    spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-    ```
+1. Inicie o serviço do PostgreSQL.
+2. Crie o banco padrão esperado pelo projeto (ajuste se desejar):
+   ```sql
+   CREATE DATABASE projeto_vendas;
+   ```
+3. As tabelas (`clientes`, `produtos`, `pedidos`, `itens_pedido`) são criadas automaticamente na primeira execução graças ao Spring Data JPA.
 
 ---
 
-## 4. Executando a Aplicação
+## 3. Configuração da Aplicação
 
-Com o banco de dados e o arquivo `application.properties` configurados, você pode iniciar o servidor:
+O arquivo `src/main/resources/application.properties` já está versionado. Atualize conforme o seu ambiente:
 
-**A. Pelo IntelliJ IDEA (Recomendado):**
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5433/projeto_vendas
+spring.datasource.username=postgres
+spring.datasource.password=12345
+spring.datasource.driver-class-name=org.postgresql.Driver
 
-1.  Abra a pasta do projeto no IntelliJ.
-2.  Aguarde o Maven baixar as dependências.
-3.  Encontre o arquivo `SistemaVendasApiApplication.java`.
-4.  Clique no ícone "Play" (▶) ao lado do método `main` para iniciar o servidor.
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```
 
-**B. Pelo Terminal (Maven):**
+> **Observação:** ajuste porta, usuário e senha para combinar com a sua instalação. Os endpoints usam Bean Validation (`spring-boot-starter-validation`); payloads inválidos retornam `400 Bad Request` com mensagens indicando cada campo.
 
-Na pasta raiz do projeto (onde se encontra o `pom.xml`), execute:
+---
+
+## 4. Como executar
+
+Na raiz do projeto:
 
 ```bash
 mvn spring-boot:run
+```
+
+Ou, na IDE, execute a classe `SistemaVendasApiApplication`.
+
+---
+
+## 5. Endpoints
+
+Base URL padrão: `http://localhost:8080`
+
+### Clientes
+
+- `POST /clientes`
+  ```json
+  {
+    "nome": "João Silva",
+    "email": "joao@exemplo.com",
+    "telefone": "11999999999"
+  }
+  ```
+  - Validações: nome, email e telefone obrigatórios; email precisa ser válido.
+  - Exemplo de retorno inválido:
+    ```json
+    {
+      "nome": "O nome é obrigatório.",
+      "email": "O e-mail informado é inválido."
+    }
+    ```
+- `GET /clientes` – lista todos
+- `GET /clientes/{id}` – retorna 200 ou 404
+- `PUT /clientes/{id}` – atualiza (reaplica validações)
+- `DELETE /clientes/{id}` – remove cliente (204)
+
+### Produtos
+
+- `POST /produtos`
+  ```json
+  {
+    "nome": "Notebook Gamer",
+    "descricao": "Core i7, 16GB RAM",
+    "preco": 4500.00,
+    "quantidadeEstoque": 12
+  }
+  ```
+  - Validações: nome obrigatório, preço > 0, estoque ≥ 0.
+  - Retorno para payload inválido:
+    ```json
+    {
+      "nome": "O nome do produto é obrigatório.",
+      "preco": "O preço deve ser maior que zero.",
+      "quantidadeEstoque": "A quantidade em estoque não pode ser negativa."
+    }
+    ```
+- `GET /produtos` – lista todos
+- `GET /produtos/{id}` – 200 ou 404
+- `PUT /produtos/{id}` – atualiza com validações
+- `DELETE /produtos/{id}` – remove produto (204)
+
+### Pedidos
+
+- `POST /pedidos`
+  ```json
+  {
+    "clienteId": 1,
+    "itens": [
+      { "produtoId": 1, "quantidade": 2 }
+    ]
+  }
+  ```
+  - Regras de negócio: cliente e produtos precisam existir; estoque é verificado e decrementado.
+- `GET /pedidos` – lista todos os pedidos.
+
+---
+
+## 6. Testes com Postman
+
+1. Crie uma collection contendo as requisições acima e defina o header `Content-Type: application/json`.
+2. Monte casos positivos e negativos:
+   - Cliente com dados vazios → `400`.
+   - Produto com preço negativo → `400`.
+   - Pedido com estoque insuficiente → `400`.
+3. Use a aba **Tests** para automatizar checks simples:
+   ```javascript
+   pm.test("Status 201", function () {
+     pm.response.to.have.status(201);
+   });
+   ```
+
+---
+
+## 7. Testes Automatizados
+
+O projeto possui configuração de testes com H2 em `src/test/resources/application.properties`. Para executar:
+
+```bash
+mvn test
+```
+
+---
+
+## 8. Dependências relevantes
+
+- `spring-boot-starter-web`
+- `spring-boot-starter-data-jpa`
+- `spring-boot-starter-validation`
+- `org.postgresql:postgresql`
+- `com.h2database:h2` (escopo de testes)
+
+---
+
+## 9. Próximos passos sugeridos
+
+- Adicionar paginação e filtros nas listagens.
+- Criar testes de integração cobrindo fluxos de pedidos.
+- Centralizar tratamento de erros com um handler global reutilizável.
+
