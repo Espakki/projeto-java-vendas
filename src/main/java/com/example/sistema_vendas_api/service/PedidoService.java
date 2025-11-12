@@ -8,23 +8,19 @@ import com.example.sistema_vendas_api.model.Pedido;
 import com.example.sistema_vendas_api.model.Produto;
 
 import com.example.sistema_vendas_api.repository.ClienteRepository;
-import com.example.sistema_vendas_api.repository.ItemPedidoRepository;
 import com.example.sistema_vendas_api.repository.PedidoRepository;
 import com.example.sistema_vendas_api.repository.ProdutoRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
-    @Autowired
-    private ItemPedidoRepository itemPedidoRepository;
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
@@ -56,7 +52,13 @@ public class PedidoService {
             itemPedido.setQuantidade(itemDTO.getQuantidade());
             itemPedido.setPrecoUnitario(java.math.BigDecimal.valueOf(produto.getPreco()));
             pedido.getItens().add(itemPedido);
+            
         }
         return pedidoRepository.save(pedido);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Pedido> listarPedidos() {
+        return pedidoRepository.findAll();
     }
 }
