@@ -95,33 +95,33 @@ projeto-java-vendas/
 │   │   ├── java/
 │   │   │   └── com/example/sistema_vendas_api/
 │   │   │       ├── SistemaVendasApiApplication.java
-│   │   │       ├── controller/          # Camada de controle REST
+│   │   │       ├── controller/          
 │   │   │       │   ├── ClienteController.java
 │   │   │       │   ├── ProdutoController.java
 │   │   │       │   ├── PedidoController.java
 │   │   │       │   └── TesteController.java
-│   │   │       ├── service/             # Camada de serviços
+│   │   │       ├── service/             
 │   │   │       │   └── PedidoService.java
-│   │   │       ├── repository/          # Camada de acesso a dados
+│   │   │       ├── repository/
 │   │   │       │   ├── ClienteRepository.java
 │   │   │       │   ├── ProdutoRepository.java
 │   │   │       │   ├── PedidoRepository.java
 │   │   │       │   └── ItemPedidoRepository.java
-│   │   │       ├── model/               # Entidades JPA
+│   │   │       ├── model/               
 │   │   │       │   ├── Cliente.java
 │   │   │       │   ├── Produto.java
 │   │   │       │   ├── Pedido.java
 │   │   │       │   └── ItemPedido.java
-│   │   │       └── dto/                 # Data Transfer Objects
+│   │   │       └── dto/                 
 │   │   │           ├── PedidoDTO.java
 │   │   │           └── ItemPedidoDTO.java
 │   │   └── resources/
-│   │       └── application.properties   # Configurações
+│   │       └── application.properties   
 │   └── test/
-│       └── java/                        # Testes unitários
-├── pom.xml                              # Configuração Maven
-├── README.md                            # Documentação do usuário
-└── DOCUMENTACAO_TECNICA.md             # Esta documentação
+│       └── java/                        
+├── pom.xml                              
+├── README.md                            
+└── DOCUMENTACAO_TECNICA.md             
 ```
 
 ---
