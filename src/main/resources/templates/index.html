@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vendas - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Sistema de Gerenciamento de Vendas</h1>
+            <p class="subtitle">Gerencie clientes, produtos e pedidos de forma simples e eficiente</p>
+        </header>
+
+        <nav class="menu">
+            <a href="/clientes" class="card">
+                <div class="card-icon">👥</div>
+                <h2>Clientes</h2>
+                <p>Cadastre e gerencie seus clientes</p>
+            </a>
+
+            <a href="/produtos" class="card">
+                <div class="card-icon">📦</div>
+                <h2>Produtos</h2>
+                <p>Controle seu estoque de produtos</p>
+            </a>
+
+            <a href="/pedidos" class="card">
+                <div class="card-icon">🛍️</div>
+                <h2>Pedidos</h2>
+                <p>Crie e acompanhe pedidos de venda</p>
+            </a>
+        </nav>
+
+        <footer>
+            <p>&copy; 2025 Sistema de Vendas - <a href="https://github.com/iSousadev">Rodolfo Sousa</a></p>
+        </footer>
+    </div>
+</body>
+</html>
+

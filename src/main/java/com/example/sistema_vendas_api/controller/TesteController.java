@@ -4,13 +4,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TesteController {
 
-    @GetMapping("/")
-    public String home() {
-        return "🚀 API Sistema de Vendas funcionando! gg porraaaaaaaaaaaaaaaa !!!!!!";
-    }
-
-    @GetMapping("/teste")
+    @GetMapping("/api/teste")
     public String teste() {
-        return "✅ Endpoint /teste funcionando corretamente!";
+        return "✅ Endpoint /api/teste funcionando corretamente!";
     }
 }

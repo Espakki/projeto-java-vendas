@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛍️ Gerenciar Pedidos</h1>
+            <a href="/" class="btn-secondary">← Voltar</a>
+        </header>
+
+        <div class="content">
+            <div class="form-section">
+                <h2>Criar Novo Pedido</h2>
+                <form id="formPedido" class="form">
+                    <div class="form-group">
+                        <label for="clienteId">Cliente *</label>
+                        <select id="clienteId" name="clienteId" required>
+                            <option value="">Selecione um cliente</option>
+                        </select>
+                    </div>
+                    
+                    <div id="itensContainer">
+                        <h3>Itens do Pedido</h3>
+                        <div class="item-pedido">
+                            <div class="form-group">
+                                <label>Produto</label>
+                                <select class="produto-select" required>
+                                    <option value="">Selecione um produto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade</label>
+                                <input type="number" class="quantidade-input" min="1" required>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removerItem(this)">Remover</button>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn-secondary" onclick="adicionarItem()">+ Adicionar Item</button>
+                    <button type="submit" class="btn-primary">Criar Pedido</button>
+                </form>
+            </div>
+
+            <div class="list-section">
+                <h2>Lista de Pedidos</h2>
+                <div id="loading" class="loading">Carregando...</div>
+                <div id="pedidosList" class="table-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/pedidos.js}"></script>
+</body>
+</html>
+
