@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/api/produtos")
 public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
