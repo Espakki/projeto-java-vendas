@@ -50,7 +50,7 @@ public class PedidoService {
             itemPedido.setPedido(pedido);
             itemPedido.setProduto(produto);
             itemPedido.setQuantidade(itemDTO.getQuantidade());
-            itemPedido.setPrecoUnitario(java.math.BigDecimal.valueOf(produto.getPreco()));
+            itemPedido.setPrecoUnitario(produto.getPreco());
             pedido.getItens().add(itemPedido);
             
         }
