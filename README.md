@@ -28,7 +28,7 @@ Instale os seguintes softwares:
 
 ## 3. Configuração da Aplicação
 
-O arquivo `src/main/resources/application.properties` já está versionado. Atualize conforme o seu ambiente:
+O arquivo `src/main/resources/application.properties` já está versionado. Atualize sempre conforme o ambiente que será utilizado:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5433/projeto_vendas
