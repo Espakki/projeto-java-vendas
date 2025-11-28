@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:8080/api';
+const API_URL =
+    window.location.origin && window.location.origin !== 'null'
+        ? `${window.location.origin}/api`
+        : 'http://localhost:8081/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarProdutos();
@@ -32,8 +35,8 @@ async function carregarProdutos() {
                     <td>R$ ${parseFloat(produto.preco).toFixed(2)}</td>
                     <td>${produto.quantidadeEstoque}</td>
                     <td>
-                        <button class="btn-secondary" onclick="editarProduto(${produto.id})">Editar</button>
-                        <button class="btn-remove" onclick="deletarProduto(${produto.id})">Excluir</button>
+                        <button class="btn btn-outline-secondary btn-sm me-2" onclick="editarProduto(${produto.id})">Editar</button>
+                        <button class="btn btn-outline-danger btn-sm" onclick="deletarProduto(${produto.id})">Excluir</button>
                     </td>
                 </tr>
             `;

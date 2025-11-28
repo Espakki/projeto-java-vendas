@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:8080/api';
+const API_URL =
+    window.location.origin && window.location.origin !== 'null'
+        ? `${window.location.origin}/api`
+        : 'http://localhost:8081/api';
 
 let clientes = [];
 let produtos = [];
@@ -68,17 +71,17 @@ function adicionarItem() {
     itemDiv.className = 'item-pedido';
     
     itemDiv.innerHTML = `
-        <div class="form-group">
-            <label>Produto</label>
-            <select class="produto-select" required>
+        <div>
+            <label class="form-label">Produto</label>
+            <select class="form-select produto-select" required>
                 <option value="">Selecione um produto</option>
             </select>
         </div>
-        <div class="form-group">
-            <label>Quantidade</label>
-            <input type="number" class="quantidade-input" min="1" required>
+        <div>
+            <label class="form-label">Quantidade</label>
+            <input type="number" class="form-control quantidade-input" min="1" required>
         </div>
-        <button type="button" class="btn-remove" onclick="removerItem(this)">Remover</button>
+        <button type="button" class="btn btn-outline-danger" onclick="removerItem(this)">Remover</button>
     `;
     
     container.appendChild(itemDiv);
@@ -129,19 +132,19 @@ async function criarPedido(e) {
             mostrarMensagem(`Pedido #${pedido.id} criado com sucesso!`, 'success');
             document.getElementById('formPedido').reset();
             document.getElementById('itensContainer').innerHTML = `
-                <h3>Itens do Pedido</h3>
+                <h3 class="h5 fw-semibold mb-3">Itens do Pedido</h3>
                 <div class="item-pedido">
-                    <div class="form-group">
-                        <label>Produto</label>
-                        <select class="produto-select" required>
+                    <div>
+                        <label class="form-label">Produto</label>
+                        <select class="form-select produto-select" required>
                             <option value="">Selecione um produto</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Quantidade</label>
-                        <input type="number" class="quantidade-input" min="1" required>
+                    <div>
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" class="form-control quantidade-input" min="1" required>
                     </div>
-                    <button type="button" class="btn-remove" onclick="removerItem(this)">Remover</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="removerItem(this)">Remover</button>
                 </div>
             `;
             atualizarSelectsProdutos();

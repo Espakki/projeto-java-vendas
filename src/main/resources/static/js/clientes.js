@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:8080/api';
+const API_URL =
+    window.location.origin && window.location.origin !== 'null'
+        ? `${window.location.origin}/api`
+        : 'http://localhost:8081/api';
 
 // Carregar clientes ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,8 +35,8 @@ async function carregarClientes() {
                     <td>${cliente.email}</td>
                     <td>${cliente.telefone}</td>
                     <td>
-                        <button class="btn-secondary" onclick="editarCliente(${cliente.id})">Editar</button>
-                        <button class="btn-remove" onclick="deletarCliente(${cliente.id})">Excluir</button>
+                        <button class="btn btn-outline-secondary btn-sm me-2" onclick="editarCliente(${cliente.id})">Editar</button>
+                        <button class="btn btn-outline-danger btn-sm" onclick="deletarCliente(${cliente.id})">Excluir</button>
                     </td>
                 </tr>
             `;
