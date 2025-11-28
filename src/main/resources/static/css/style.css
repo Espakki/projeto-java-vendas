@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 32px 16px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(4px 4px at 20% 30%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(3px 3px at 60% 70%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(3px 3px at 50% 50%, rgba(255, 255, 255, 0.55), transparent),
+        radial-gradient(4px 4px at 80% 10%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(3px 3px at 90% 60%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(3px 3px at 33% 85%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(4px 4px at 10% 40%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(3px 3px at 70% 20%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(3px 3px at 40% 80%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(4px 4px at 15% 60%, rgba(255, 255, 255, 0.45), transparent);
+    background-size: 100% 100%;
+    animation: particlesMove1 30s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(3px 3px at 15% 25%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(4px 4px at 75% 80%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(3px 3px at 45% 15%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(4px 4px at 85% 45%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(3px 3px at 25% 75%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(4px 4px at 55% 90%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(3px 3px at 5% 50%, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(4px 4px at 95% 30%, rgba(255, 255, 255, 0.5), transparent);
+    background-size: 100% 100%;
+    animation: particlesMove2 35s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes particlesMove1 {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(50px, -30px);
+    }
+    50% {
+        transform: translate(-40px, 40px);
+    }
+    75% {
+        transform: translate(30px, 25px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes particlesMove2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-35px, 35px);
+    }
+    50% {
+        transform: translate(45px, -25px);
+    }
+    75% {
+        transform: translate(-20px, -30px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+
+.app-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.app-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+.app-header > div {
+    width: 100%;
+    text-align: center;
+}
+
+.app-header h1 {
+    color: #1f2d3d;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    justify-content: center;
+    text-align: center;
+}
+
+.app-header h1 span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.app-header h1 > span:not(:first-child) {
+    text-align: center;
+}
+
+.app-header .subtitle {
+    color: #4c566a;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: 4px;
+    text-align: center;
+}
+
+@media (max-width: 991px) {
+    .app-header {
+        padding: 24px;
+    }
+    
+    .app-header h1 {
+        font-size: 1.75rem;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .app-header h1 > span:not(:first-child) {
+        font-size: 1.5rem;
+    }
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #1f2d3d;
+    text-decoration: none !important;
+    display: block;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 32px 60px rgba(15, 23, 42, 0.15);
+    color: #1f2d3d;
+}
+
+.feature-icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    line-height: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-card h2 {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1f2d3d;
+    text-align: center;
+}
+
+.feature-card p {
+    margin: 0;
+    color: #4c566a;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.section-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+    border: none;
+}
+
+.section-title {
+    font-weight: 600;
+    color: #1f2d3d;
+    border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+}
+
+.btn-gradient {
+    background: linear-gradient(120deg, #6c63ff, #5a2fc2);
+    border: none;
+    color: #fff;
+    box-shadow: 0 12px 20px rgba(108, 99, 255, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(90, 47, 194, 0.35);
+    color: #fff;
+}
+
+.btn-soft {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.btn-soft:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #472a87;
+}
+
+.item-pedido {
+    background: #f8f9fb;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px dashed rgba(102, 126, 234, 0.4);
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.item-pedido button {
+    height: 42px;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+}
+
+.error,
+.success {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.error {
+    background: #ffe2e5;
+    color: #b42318;
+}
+
+.success {
+    background: #d1f7c4;
+    color: #24613c;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+.table-container table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-container th {
+    background: rgba(102, 126, 234, 0.12);
+    color: #1f2d3d;
+}
+
+footer {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.app-footer {
+    text-align: center;
+    margin-top: 48px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.footer-profiles-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    display: block;
+}
+
+.footer-info small {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        gap: 12px;
+    }
+    
+    .footer-profiles-container {
+        gap: 6px;
+    }
+    
+    .footer-avatar {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 992px) {
+    .item-pedido {
+        grid-template-columns: 1fr;
+    }
+}
+

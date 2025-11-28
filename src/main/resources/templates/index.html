@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vendas</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <main class="app-wrapper container py-5">
+        <header class="app-header text-center d-flex flex-column align-items-center justify-content-center">
+            <div>
+                <h1 class="mb-2 d-flex align-items-center justify-content-center gap-3">
+                    <span class="fs-1 d-inline-flex align-items-center">🛒</span>
+                    <span>Sistema de Gerenciamento de Vendas</span>
+                </h1>
+                <p class="subtitle mb-0">Gerencie clientes, produtos e pedidos de forma simples e eficiente</p>
+            </div>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-md-4 d-flex">
+                <a href="/clientes" class="feature-card w-100 text-center">
+                    <div class="feature-icon d-flex justify-content-center align-items-center">👥</div>
+                    <h2 class="h4 mb-2">Clientes</h2>
+                    <p class="mb-0">Cadastre e gerencie seus clientes</p>
+                </a>
+            </div>
+            <div class="col-md-4 d-flex">
+                <a href="/produtos" class="feature-card w-100 text-center">
+                    <div class="feature-icon d-flex justify-content-center align-items-center">📦</div>
+                    <h2 class="h4 mb-2">Produtos</h2>
+                    <p class="mb-0">Controle seu estoque de produtos</p>
+                </a>
+            </div>
+            <div class="col-md-4 d-flex">
+                <a href="/pedidos" class="feature-card w-100 text-center">
+                    <div class="feature-icon d-flex justify-content-center align-items-center">🛍️</div>
+                    <h2 class="h4 mb-2">Pedidos</h2>
+                    <p class="mb-0">Crie e acompanhe pedidos de venda</p>
+                </a>
+            </div>
+        </div>
+
+        <footer class="app-footer mt-5">
+            <div class="footer-content d-flex flex-column align-items-center justify-content-center gap-3">
+                <p class="mb-0">&copy; 2025 Sistema de Vendas</p>
+                <div class="footer-profiles-container">
+                    <a href="https://github.com/isousadev" target="_blank" class="footer-profile">
+                        <img class="footer-avatar" src="https://github.com/isousadev.png" alt="Rodolfo" onerror="this.src='https://ui-avatars.com/api/?name=Rodolfo+Sousa&size=128&background=667eea&color=fff'">
+                    </a>
+                    <a href="https://github.com/Espakki" target="_blank" class="footer-profile">
+                        <img class="footer-avatar" src="https://github.com/Espakki.png" alt="Espakki" onerror="this.src='https://ui-avatars.com/api/?name=Espakki&size=128&background=667eea&color=fff'">
+                    </a>
+                    <a href="https://github.com/camscostney" target="_blank" class="footer-profile">
+                        <img class="footer-avatar" src="https://github.com/camscostney.png" alt="camscostney" onerror="this.src='https://ui-avatars.com/api/?name=camscostney&size=128&background=667eea&color=fff'">
+                    </a>
+                    <a href="https://github.com/maria-ramos652" target="_blank" class="footer-profile">
+                        <img class="footer-avatar" src="https://github.com/maria-ramos652.png" alt="maria-ramos652" onerror="this.src='https://ui-avatars.com/api/?name=maria-ramos652&size=128&background=667eea&color=fff'">
+                    </a>
+                    <a href="https://github.com/KaiqueCh" target="_blank" class="footer-profile">
+                        <img class="footer-avatar" src="https://github.com/KaiqueCh.png" alt="KaiqueCh" onerror="this.src='https://ui-avatars.com/api/?name=KaiqueCh&size=128&background=667eea&color=fff'">
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</body>
+</html>
+

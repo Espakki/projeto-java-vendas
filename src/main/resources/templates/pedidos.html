@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Pedidos</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <main class="container py-5">
+        <header class="app-header d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center justify-content-between">
+            <div>
+                <h1 class="mb-2 d-flex align-items-center gap-2">
+                    <span class="fs-2">🛍️</span>
+                    <span>Gerenciar Pedidos</span>
+                </h1>
+                <p class="subtitle mb-0">Monte pedidos completos e acompanhe o status em tempo real</p>
+            </div>
+            <a href="/" class="btn btn-outline-secondary mt-2 mt-lg-0 align-self-start align-self-lg-center">← Voltar</a>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <section class="section-card p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 class="section-title h4 mb-0">Criar Novo Pedido</h2>
+                    </div>
+                    <form id="formPedido" class="form">
+                        <div class="mb-3">
+                            <label for="clienteId" class="form-label">Cliente *</label>
+                            <select id="clienteId" name="clienteId" class="form-select" required>
+                                <option value="">Selecione um cliente</option>
+                            </select>
+                        </div>
+
+                        <div id="itensContainer">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h3 class="h5 fw-semibold mb-0">Itens do Pedido</h3>
+                            </div>
+                            <div class="item-pedido">
+                                <div>
+                                    <label class="form-label">Produto</label>
+                                    <select class="form-select produto-select" required>
+                                        <option value="">Selecione um produto</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="form-label">Quantidade</label>
+                                    <input type="number" class="form-control quantidade-input" min="1" required>
+                                </div>
+                                <button type="button" class="btn btn-outline-danger" onclick="removerItem(this)">Remover</button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                            <button type="button" class="btn btn-outline-secondary w-100" onclick="adicionarItem()">+ Adicionar Item</button>
+                            <button type="submit" class="btn btn-gradient w-100">Criar Pedido</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <div class="col-lg-6">
+                <section class="section-card p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 class="section-title h4 mb-0">Lista de Pedidos</h2>
+                    </div>
+                    <div id="loading" class="loading">Carregando...</div>
+                    <div id="pedidosList" class="table-container table-responsive"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer mt-5">
+        <div class="footer-content d-flex flex-column align-items-center justify-content-center gap-3">
+            <p class="mb-0">&copy; 2025 Sistema de Vendas</p>
+            <div class="footer-profiles-container">
+                <a href="https://github.com/isousadev" target="_blank" class="footer-profile">
+                    <img class="footer-avatar" src="https://github.com/isousadev.png" alt="Rodolfo" onerror="this.src='https://ui-avatars.com/api/?name=Rodolfo+Sousa&size=128&background=667eea&color=fff'">
+                </a>
+                <a href="https://github.com/Espakki" target="_blank" class="footer-profile">
+                    <img class="footer-avatar" src="https://github.com/Espakki.png" alt="Espakki" onerror="this.src='https://ui-avatars.com/api/?name=Espakki&size=128&background=667eea&color=fff'">
+                </a>
+                <a href="https://github.com/camscostney" target="_blank" class="footer-profile">
+                    <img class="footer-avatar" src="https://github.com/camscostney.png" alt="camscostney" onerror="this.src='https://ui-avatars.com/api/?name=camscostney&size=128&background=667eea&color=fff'">
+                </a>
+                <a href="https://github.com/maria-ramos652" target="_blank" class="footer-profile">
+                    <img class="footer-avatar" src="https://github.com/maria-ramos652.png" alt="maria-ramos652" onerror="this.src='https://ui-avatars.com/api/?name=maria-ramos652&size=128&background=667eea&color=fff'">
+                </a>
+                <a href="https://github.com/KaiqueCh" target="_blank" class="footer-profile">
+                    <img class="footer-avatar" src="https://github.com/KaiqueCh.png" alt="KaiqueCh" onerror="this.src='https://ui-avatars.com/api/?name=KaiqueCh&size=128&background=667eea&color=fff'">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script th:src="@{/js/pedidos.js}"></script>
+</body>
+</html>
+

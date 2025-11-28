@@ -2,7 +2,8 @@ package com.example.sistema_vendas_api.controller;
 
 
 import com.example.sistema_vendas_api.model.Cliente;
-import com.example.sistema_vendas_api.repository.ClienteRepository;
+import com.example.sistema_vendas_api.service.ClienteService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
 import jakarta.validation.ConstraintViolationException;
@@ -25,48 +26,51 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/api/clientes")
 public class ClienteController {
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
     // listar
     @GetMapping
     public List<Cliente> findAll(){
-        return clienteRepository.findAll();
+        return clienteService.listarClientes();
     }
     // cadastro
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Cliente> save(@Valid @RequestBody Cliente cliente){
-        Cliente salvo = clienteRepository.save(cliente);
+        Cliente salvo = clienteService.salvarCliente(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
     // busca por id
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> findById(@PathVariable Integer id){
-        return clienteRepository.findById(id)
+        return clienteService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     // atualizar por id
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizar(@PathVariable Integer id, @Valid @RequestBody Cliente clienteAtualizado) {
-        return clienteRepository.findById(id)
-                .map(clienteExistente -> {
-                    clienteExistente.setNome(clienteAtualizado.getNome());
-                    clienteExistente.setEmail(clienteAtualizado.getEmail());
-                    clienteExistente.setTelefone(clienteAtualizado.getTelefone());
-
-                    Cliente atualizado = clienteRepository.save(clienteExistente);
-                    return ResponseEntity.ok(atualizado);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Cliente atualizado = clienteService.atualizarCliente(id, clienteAtualizado);
+        return ResponseEntity.ok(atualizado);
     }
     // deletar
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id){
-        clienteRepository.deleteById(id);
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        try {
+            clienteService.deletarCliente(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Erro ao excluir cliente: " + e.getMessage()));
+        }
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -87,5 +91,17 @@ public class ClienteController {
                         violation -> violation.getPropertyPath().toString(),
                         violation -> violation.getMessage(),
                         (msg1, msg2) -> msg1));
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public Map<String, String> handleEntityNotFound(EntityNotFoundException ex) {
+        return Map.of("message", ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalStateException.class)
+    public Map<String, String> handleIllegalState(IllegalStateException ex) {
+        return Map.of("message", ex.getMessage());
     }
 }
