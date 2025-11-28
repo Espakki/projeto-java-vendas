@@ -32,13 +32,14 @@ O arquivo `src/main/resources/application.properties` já está versionado. Atua
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5433/projeto_vendas
-spring.datasource.username=postgres
-spring.datasource.password=12345
+spring.datasource.username=nome do seu banco aqui
+spring.datasource.password=sua senha do banco aqui
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
 
 server.port=8081
 ```
