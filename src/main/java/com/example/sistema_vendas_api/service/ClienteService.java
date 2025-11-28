@@ -2,6 +2,7 @@ package com.example.sistema_vendas_api.service;
 
 import com.example.sistema_vendas_api.model.Cliente;
 import com.example.sistema_vendas_api.repository.ClienteRepository;
+import com.example.sistema_vendas_api.repository.PedidoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final PedidoRepository pedidoRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, PedidoRepository pedidoRepository) {
         this.clienteRepository = clienteRepository;
+        this.pedidoRepository = pedidoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -47,9 +50,13 @@ public class ClienteService {
 
     @Transactional
     public void deletarCliente(@NonNull Integer id) {
-        if (!clienteRepository.existsById(id)) {
-            throw new EntityNotFoundException("Cliente não encontrado");
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        
+        if (pedidoRepository.existsByCliente(cliente)) {
+            throw new IllegalStateException("Não é possível excluir o cliente pois existem pedidos associados a ele. Exclua os pedidos primeiro.");
         }
+        
         clienteRepository.deleteById(id);
     }
 }

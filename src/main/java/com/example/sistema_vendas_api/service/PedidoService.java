@@ -13,6 +13,7 @@ import com.example.sistema_vendas_api.repository.ProdutoRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,5 +61,13 @@ public class PedidoService {
     @Transactional(readOnly = true)
     public List<Pedido> listarPedidos() {
         return pedidoRepository.findAll();
+    }
+
+    @Transactional
+    public void deletarPedido(Integer id) {
+        if (!pedidoRepository.existsById(id)) {
+            throw new EntityNotFoundException("Pedido não encontrado");
+        }
+        pedidoRepository.deleteById(id);
     }
 }

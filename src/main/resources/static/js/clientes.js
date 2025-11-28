@@ -82,26 +82,42 @@ async function cadastrarCliente(e) {
 }
 
 function mostrarMensagem(mensagem, tipo) {
-    const formSection = document.querySelector('.form-section');
+    // Remove mensagens anteriores
+    const mensagensAnteriores = document.querySelectorAll('.mensagem-temporaria');
+    mensagensAnteriores.forEach(msg => msg.remove());
+    
     const div = document.createElement('div');
-    div.className = tipo;
+    div.className = `${tipo} mensagem-temporaria`;
     div.textContent = mensagem;
-    formSection.insertBefore(div, formSection.firstChild);
+    div.style.marginBottom = '16px';
+    
+    // Insere a mensagem no início do main
+    const main = document.querySelector('main');
+    if (main) {
+        main.insertBefore(div, main.firstChild);
+    }
     
     setTimeout(() => div.remove(), 5000);
 }
 
 function mostrarErros(errors) {
-    const formSection = document.querySelector('.form-section');
-    let html = '<div class="error"><ul>';
+    // Remove mensagens anteriores
+    const mensagensAnteriores = document.querySelectorAll('.mensagem-temporaria');
+    mensagensAnteriores.forEach(msg => msg.remove());
+    
+    let html = '<div class="error mensagem-temporaria"><ul>';
     for (const [campo, mensagem] of Object.entries(errors)) {
         html += `<li>${campo}: ${mensagem}</li>`;
     }
     html += '</ul></div>';
-    formSection.insertAdjacentHTML('afterbegin', html);
+    
+    const main = document.querySelector('main');
+    if (main) {
+        main.insertAdjacentHTML('afterbegin', html);
+    }
     
     setTimeout(() => {
-        const errorDiv = formSection.querySelector('.error');
+        const errorDiv = document.querySelector('.mensagem-temporaria');
         if (errorDiv) errorDiv.remove();
     }, 5000);
 }
@@ -114,9 +130,12 @@ async function deletarCliente(id) {
             method: 'DELETE'
         });
         
-        if (response.ok) {
+        if (response.ok || response.status === 204) {
             mostrarMensagem('Cliente excluído com sucesso!', 'success');
             carregarClientes();
+        } else {
+            const errorData = await response.json().catch(() => ({ message: 'Erro ao excluir cliente' }));
+            mostrarMensagem(`Erro ao excluir cliente: ${errorData.message || 'Erro desconhecido'}`, 'error');
         }
     } catch (error) {
         mostrarMensagem(`Erro ao excluir cliente: ${error.message}`, 'error');

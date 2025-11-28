@@ -65,14 +65,31 @@ public class ProdutoController {
     }
     // deletar
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id){
-        produtoService.deletarProduto(id);
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        try {
+            produtoService.deletarProduto(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Erro ao excluir produto: " + e.getMessage()));
+        }
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public Map<String, String> handleEntityNotFound(EntityNotFoundException ex) {
+        return Map.of("message", ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalStateException.class)
+    public Map<String, String> handleIllegalState(IllegalStateException ex) {
         return Map.of("message", ex.getMessage());
     }
 }

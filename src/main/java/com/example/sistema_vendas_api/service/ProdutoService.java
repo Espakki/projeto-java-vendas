@@ -1,6 +1,7 @@
 package com.example.sistema_vendas_api.service;
 
 import com.example.sistema_vendas_api.model.Produto;
+import com.example.sistema_vendas_api.repository.ItemPedidoRepository;
 import com.example.sistema_vendas_api.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, ItemPedidoRepository itemPedidoRepository) {
         this.produtoRepository = produtoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -48,9 +51,13 @@ public class ProdutoService {
 
     @Transactional
     public void deletarProduto(@NonNull Integer id) {
-        if (!produtoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Produto não encontrado");
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+        
+        if (itemPedidoRepository.existsByProduto(produto)) {
+            throw new IllegalStateException("Não é possível excluir o produto pois existem itens de pedidos associados a ele. Exclua os pedidos primeiro.");
         }
+        
         produtoRepository.deleteById(id);
     }
 }

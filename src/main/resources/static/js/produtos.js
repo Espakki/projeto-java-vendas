@@ -115,9 +115,12 @@ async function deletarProduto(id) {
             method: 'DELETE'
         });
         
-        if (response.ok) {
+        if (response.ok || response.status === 204) {
             mostrarMensagem('Produto excluído com sucesso!', 'success');
             carregarProdutos();
+        } else {
+            const errorData = await response.json().catch(() => ({ message: 'Erro ao excluir produto' }));
+            mostrarMensagem(`Erro ao excluir produto: ${errorData.message || 'Erro desconhecido'}`, 'error');
         }
     } catch (error) {
         mostrarMensagem(`Erro ao excluir produto: ${error.message}`, 'error');

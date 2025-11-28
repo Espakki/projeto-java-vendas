@@ -174,7 +174,7 @@ async function carregarPedidos() {
             return;
         }
         
-        let html = '<table><thead><tr><th>ID</th><th>Cliente</th><th>Data</th><th>Status</th><th>Itens</th><th>Total</th></tr></thead><tbody>';
+        let html = '<table><thead><tr><th>ID</th><th>Cliente</th><th>Data</th><th>Status</th><th>Itens</th><th>Total</th><th>Ações</th></tr></thead><tbody>';
         
         pedidos.forEach(pedido => {
             const data = new Date(pedido.dataPedido).toLocaleString('pt-BR');
@@ -190,6 +190,9 @@ async function carregarPedidos() {
                     <td>${pedido.status}</td>
                     <td>${pedido.itens.length} item(ns)</td>
                     <td>R$ ${total.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-outline-danger btn-sm" onclick="deletarPedido(${pedido.id})">Excluir</button>
+                    </td>
                 </tr>
             `;
         });
@@ -202,12 +205,41 @@ async function carregarPedidos() {
     }
 }
 
+async function deletarPedido(id) {
+    if (!confirm('Tem certeza que deseja excluir este pedido?')) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/pedidos/${id}`, {
+            method: 'DELETE'
+        });
+        
+        if (response.ok || response.status === 204) {
+            mostrarMensagem('Pedido excluído com sucesso!', 'success');
+            carregarPedidos();
+        } else {
+            const errorData = await response.json().catch(() => ({ message: 'Erro ao excluir pedido' }));
+            mostrarMensagem(`Erro ao excluir pedido: ${errorData.message || 'Erro desconhecido'}`, 'error');
+        }
+    } catch (error) {
+        mostrarMensagem(`Erro ao excluir pedido: ${error.message}`, 'error');
+    }
+}
+
 function mostrarMensagem(mensagem, tipo) {
-    const formSection = document.querySelector('.form-section');
+    // Remove mensagens anteriores
+    const mensagensAnteriores = document.querySelectorAll('.mensagem-temporaria');
+    mensagensAnteriores.forEach(msg => msg.remove());
+    
     const div = document.createElement('div');
-    div.className = tipo;
+    div.className = `${tipo} mensagem-temporaria`;
     div.textContent = mensagem;
-    formSection.insertBefore(div, formSection.firstChild);
+    div.style.marginBottom = '16px';
+    
+    // Insere a mensagem no início do main
+    const main = document.querySelector('main');
+    if (main) {
+        main.insertBefore(div, main.firstChild);
+    }
     
     setTimeout(() => div.remove(), 5000);
 }
