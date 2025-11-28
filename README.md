@@ -173,7 +173,8 @@ A aplicação possui uma interface web moderna e responsiva desenvolvida com Boo
 
 A página inicial apresenta um dashboard com acesso rápido às principais funcionalidades do sistema:
 
-![Página Inicial](docs/screenshots/home.png)
+<img width="1338" height="632" alt="image" src="https://github.com/user-attachments/assets/5cd743e7-8d02-4a28-9a60-c0b7038ad37f" />
+
 
 **Características:**
 - Design moderno com gradiente roxo e animação de partículas no fundo
@@ -185,7 +186,9 @@ A página inicial apresenta um dashboard com acesso rápido às principais funci
 
 Interface completa para cadastro e gerenciamento de clientes:
 
-![Gerenciamento de Clientes](docs/screenshots/clientes.png)
+<img width="1319" height="631" alt="image" src="https://github.com/user-attachments/assets/9191a168-eed1-440d-b55b-f510674c4149" />
+
+
 
 **Funcionalidades:**
 - Formulário de cadastro com validação em tempo real
@@ -203,7 +206,10 @@ Interface completa para cadastro e gerenciamento de clientes:
 
 Controle completo do catálogo de produtos e estoque:
 
-![Gerenciamento de Produtos](docs/screenshots/produtos.png)
+<img width="1288" height="639" alt="image" src="https://github.com/user-attachments/assets/decd88f4-fc96-4716-859a-cdfcc3404d06" />
+
+
+
 
 **Funcionalidades:**
 - Cadastro de produtos com nome, descrição, preço e quantidade em estoque
@@ -221,7 +227,8 @@ Controle completo do catálogo de produtos e estoque:
 
 Criação e acompanhamento de pedidos de venda:
 
-![Gerenciamento de Pedidos](docs/screenshots/pedidos.png)
+<img width="1292" height="620" alt="image" src="https://github.com/user-attachments/assets/8049b87c-9f42-4ff8-ad36-28166e384129" />
+
 
 **Funcionalidades:**
 - Seleção de cliente para o pedido
